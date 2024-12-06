@@ -1,4 +1,4 @@
-# Flutter Mini Games 🎮
+# Flutter Mini Games 🎲
 
 This app features a collection of lucky draw mini-games, each designed to provide a delightful and fun experience. Each game includes engaging animations, smooth gameplay, and a unique set of rules.
 
@@ -12,9 +12,13 @@ This app features a collection of lucky draw mini-games, each designed to provid
 
 ## 🔗 Live Preview
 
-## 🖼️ Preview
+https://flutter-mini-games.web.app
+
+## 📸 Preview
 
 ![](/preview/preview.png)
+
+The preview screenshot was generated using [AppMockUp Studio](https://studio.app-mockup.com/).
 
 ## 📁 File Structure
 
@@ -48,5 +52,5 @@ The project is modularized to maintain clarity and reusability. This structure a
 
 ## 🌟 Attribution
 
-Icons: Icons used in this project are sourced from [Freepik](https://www.freepik.com/).
-Background Image: Background image sourced from [Haikei](https://app.haikei.app/).
+- Icons: Icons used in this project are sourced from [Freepik](https://www.freepik.com/).
+- Background Image: Background images are sourced from [Haikei](https://app.haikei.app/).
