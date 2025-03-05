@@ -39,7 +39,7 @@ enum Games {
     icon: Icons.pan_tool_alt,
     backgroundImg: 'assets/background/vertical-waves-haikei.svg',
     requiredCoins: 100,
-    color: Colors.teal,
+    color: Colors.indigo,
   ),
   ;
 

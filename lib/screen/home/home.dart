@@ -2,16 +2,16 @@ import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_games/screen/home/widgets/game_button.dart';
 import 'package:mini_games/services/coin_services.dart';
 import 'package:mini_games/enum/games.dart';
 import 'package:mini_games/screen/games/stop/stop_win.dart';
-import 'package:mini_games/screen/home/widgets/game_card.dart';
 import 'package:mini_games/screen/games/spin/spin_win.dart';
 import 'package:mini_games/screen/games/tap/tap_win.dart';
 import 'package:mini_games/screen/games/roll/roll_win.dart';
 import 'package:mini_games/screen/games/flip/flip_win.dart';
 import 'package:mini_games/themes/constant.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,9 +46,9 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,60 +99,56 @@ class HomeScreenState extends State<HomeScreen> {
                               });
                             },
                       child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 4),
+                        padding: EdgeInsets.symmetric(vertical: 6),
                         child: Text('Get Coins'),
                       )),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: kPadding),
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 2,
-                    crossAxisCount:
-                        ResponsiveBreakpoints.of(context).smallerThan(TABLET)
-                            ? 1
-                            : 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(top: kPadding, bottom: 10),
+                child: Text(
+                  'Play a Game',
+                  style: GoogleFonts.poppins(
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  itemCount: _games.length,
-                  itemBuilder: (context, index) {
-                    final game = _games[index];
-                    return GameCard(
-                      game: game,
-                      onTap: () async {
-                        if (_coins < game.requiredCoins) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text('Not Enough Coins'),
-                          ));
-                          return;
-                        }
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            if (game == Games.spinwin) {
-                              return SpinWinScreen(coins: _coins, game: game);
-                            } else if (game == Games.flipwin) {
-                              return FlipWinScreen(coins: _coins, game: game);
-                            } else if (game == Games.tapwin) {
-                              return TapWinScreen(coins: _coins, game: game);
-                            } else if (game == Games.rollwin) {
-                              return RollWinScreen(coins: _coins, game: game);
-                            } else {
-                              return StopWinScreen(coins: _coins, game: game);
-                            }
-                          }),
-                        );
-                        _getCoins();
-                      },
-                    );
-                  },
                 ),
               ),
+              ...List.generate(_games.length, (index) {
+                final game = _games[index];
+                return GameButton(
+                  game: game,
+                  onTap: () async {
+                    if (_coins < game.requiredCoins) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Not Enough Coins'),
+                      ));
+                      return;
+                    }
+
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        if (game == Games.spinwin) {
+                          return SpinWinScreen(coins: _coins, game: game);
+                        } else if (game == Games.flipwin) {
+                          return FlipWinScreen(coins: _coins, game: game);
+                        } else if (game == Games.tapwin) {
+                          return TapWinScreen(coins: _coins, game: game);
+                        } else if (game == Games.rollwin) {
+                          return RollWinScreen(coins: _coins, game: game);
+                        } else {
+                          return StopWinScreen(coins: _coins, game: game);
+                        }
+                      }),
+                    );
+                    _getCoins();
+                  },
+                );
+              }),
             ],
           ),
         ),
